@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module hmc</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>hmc</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/macbook/dev/sghmc/hmc.py">/Users/macbook/dev/sghmc/hmc.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="autograd.numpy.html">autograd.numpy</a><br>
+</td><td width="25%" valign=top><a href="scipy.stats.html">scipy.stats</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-hmc"><strong>hmc</strong></a>(M, n_samples, negative_log_prob, initial_position, path_len=1, step_size=0.5)</dt><dd><tt>Hamiltonian&nbsp;Monte&nbsp;Carlo&nbsp;sampling.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+M&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Mass&nbsp;of&nbsp;the&nbsp;Euclidean-Gaussian&nbsp;kinetic&nbsp;energy&nbsp;of&nbsp;shape&nbsp;D&nbsp;x&nbsp;D<br>
+n_samples&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;Number&nbsp;of&nbsp;samples&nbsp;to&nbsp;return<br>
+negative_log_prob&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;The&nbsp;negative&nbsp;log&nbsp;probability&nbsp;to&nbsp;sample&nbsp;from<br>
+initial_position&nbsp;:&nbsp;np.array<br>
+&nbsp;&nbsp;A&nbsp;place&nbsp;to&nbsp;start&nbsp;sampling&nbsp;from.<br>
+path_len&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;path&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;faster&nbsp;and&nbsp;more&nbsp;correlated.<br>
+step_size&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;step&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;slower&nbsp;and&nbsp;more&nbsp;accurate.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+np.array<br>
+&nbsp;&nbsp;Array&nbsp;of&nbsp;length&nbsp;`n_samples`.</tt></dd></dl>
+ <dl><dt><a name="-leapfrog"><strong>leapfrog</strong></a>(M, q, p, dVdq, path_len, step_size)</dt><dd><tt>Leapfrog&nbsp;integrator&nbsp;for&nbsp;standard&nbsp;HMC&nbsp;and&nbsp;naive&nbsp;SGHMC<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+M&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Mass&nbsp;of&nbsp;the&nbsp;Euclidean-Gaussian&nbsp;kinetic&nbsp;energy&nbsp;of&nbsp;shape&nbsp;D&nbsp;x&nbsp;D<br>
+q&nbsp;:&nbsp;np.floatX<br>
+&nbsp;&nbsp;Initial&nbsp;position<br>
+p&nbsp;:&nbsp;np.floatX<br>
+&nbsp;&nbsp;Initial&nbsp;momentum<br>
+dVdq&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;Gradient&nbsp;of&nbsp;the&nbsp;velocity<br>
+path_len&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;to&nbsp;integrate&nbsp;for<br>
+step_size&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;step&nbsp;should&nbsp;be<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+q,&nbsp;p&nbsp;:&nbsp;np.floatX,&nbsp;np.floatX<br>
+&nbsp;&nbsp;New&nbsp;position&nbsp;and&nbsp;momentum</tt></dd></dl>
+ <dl><dt><a name="-leapfrog_friction"><strong>leapfrog_friction</strong></a>(M, C, q, p, dVdq, path_len, step_size)</dt><dd><tt>Leapfrog&nbsp;integrator&nbsp;for&nbsp;Stochastic&nbsp;Gradient&nbsp;Hamiltonian&nbsp;Monte&nbsp;Carlo.<br>
+Includes&nbsp;friction&nbsp;term&nbsp;per&nbsp;https://arxiv.org/abs/1402.4102<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+M&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Mass&nbsp;of&nbsp;the&nbsp;Euclidean-Gaussian&nbsp;kinetic&nbsp;energy&nbsp;of&nbsp;shape&nbsp;D&nbsp;x&nbsp;D<br>
+C&nbsp;:&nbsp;matrix<br>
+&nbsp;&nbsp;Upper&nbsp;bound&nbsp;parameter&nbsp;for&nbsp;friction&nbsp;term<br>
+q&nbsp;:&nbsp;np.floatX<br>
+&nbsp;&nbsp;Initial&nbsp;position<br>
+p&nbsp;:&nbsp;np.floatX<br>
+&nbsp;&nbsp;Initial&nbsp;momentum<br>
+dVdq&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;Gradient&nbsp;of&nbsp;the&nbsp;velocity<br>
+path_len&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;to&nbsp;integrate&nbsp;for<br>
+step_size&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;step&nbsp;should&nbsp;be<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+q,&nbsp;p&nbsp;:&nbsp;np.floatX,&nbsp;np.floatX<br>
+&nbsp;&nbsp;New&nbsp;position&nbsp;and&nbsp;momentum</tt></dd></dl>
+ <dl><dt><a name="-nsghmc"><strong>nsghmc</strong></a>(X, y, M, n_samples, negative_log_prob, initial_position, batch_size=1, path_len=1, step_size=0.5)</dt><dd><tt>Naive&nbsp;Stochastic&nbsp;Hamiltonian&nbsp;Monte&nbsp;Carlo&nbsp;sampling.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Predictor&nbsp;data&nbsp;in&nbsp;matrix&nbsp;of&nbsp;dimensions&nbsp;N&nbsp;x&nbsp;D.<br>
+y:&nbsp;np.array<br>
+&nbsp;&nbsp;Response&nbsp;data&nbsp;in&nbsp;a&nbsp;vector&nbsp;of&nbsp;length&nbsp;N.<br>
+M&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Mass&nbsp;of&nbsp;the&nbsp;Euclidean-Gaussian&nbsp;kinetic&nbsp;energy&nbsp;of&nbsp;shape&nbsp;D&nbsp;x&nbsp;D<br>
+n_samples&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;Number&nbsp;of&nbsp;samples&nbsp;to&nbsp;return<br>
+negative_log_prob&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;The&nbsp;negative&nbsp;log&nbsp;probability&nbsp;to&nbsp;sample&nbsp;from.&nbsp;Should&nbsp;be&nbsp;a&nbsp;function&nbsp;taking<br>
+&nbsp;&nbsp;three&nbsp;arguments:&nbsp;p(w,&nbsp;x_train,&nbsp;y_train)&nbsp;for&nbsp;the&nbsp;parameters,&nbsp;predictor&nbsp;data,<br>
+&nbsp;&nbsp;and&nbsp;response&nbsp;data.<br>
+initial_position&nbsp;:&nbsp;np.array<br>
+&nbsp;&nbsp;A&nbsp;place&nbsp;to&nbsp;start&nbsp;sampling&nbsp;from.<br>
+path_len&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;path&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;faster&nbsp;and&nbsp;more&nbsp;correlated.<br>
+step_size&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;step&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;slower&nbsp;and&nbsp;more&nbsp;accurate.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+np.array<br>
+&nbsp;&nbsp;Array&nbsp;of&nbsp;length&nbsp;`n_samples`.</tt></dd></dl>
+ <dl><dt><a name="-sghmc"><strong>sghmc</strong></a>(X, y, M, C, n_samples, negative_log_prob, initial_position, batch_size=1, path_len=1, step_size=0.5)</dt><dd><tt>Stochastic&nbsp;Hamiltonian&nbsp;Monte&nbsp;Carlo&nbsp;sampling.<br>
+Based&nbsp;on&nbsp;https://arxiv.org/abs/1402.4102<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+X&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Predictor&nbsp;data&nbsp;in&nbsp;matrix&nbsp;of&nbsp;dimensions&nbsp;N&nbsp;x&nbsp;D.<br>
+y:&nbsp;np.array<br>
+&nbsp;&nbsp;Response&nbsp;data&nbsp;in&nbsp;a&nbsp;vector&nbsp;of&nbsp;length&nbsp;N.<br>
+M&nbsp;:&nbsp;np.matrix<br>
+&nbsp;&nbsp;Mass&nbsp;of&nbsp;the&nbsp;Euclidean-Gaussian&nbsp;kinetic&nbsp;energy&nbsp;of&nbsp;shape&nbsp;D&nbsp;x&nbsp;D<br>
+C&nbsp;:&nbsp;matrix<br>
+&nbsp;&nbsp;Upper&nbsp;bound&nbsp;parameter&nbsp;for&nbsp;friction&nbsp;term<br>
+n_samples&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;Number&nbsp;of&nbsp;samples&nbsp;to&nbsp;return<br>
+negative_log_prob&nbsp;:&nbsp;callable<br>
+&nbsp;&nbsp;The&nbsp;negative&nbsp;log&nbsp;probability&nbsp;to&nbsp;sample&nbsp;from<br>
+initial_position&nbsp;:&nbsp;np.array<br>
+&nbsp;&nbsp;A&nbsp;place&nbsp;to&nbsp;start&nbsp;sampling&nbsp;from.<br>
+path_len&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;path&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;faster&nbsp;and&nbsp;more&nbsp;correlated.<br>
+step_size&nbsp;:&nbsp;float<br>
+&nbsp;&nbsp;How&nbsp;long&nbsp;each&nbsp;integration&nbsp;step&nbsp;is.&nbsp;Smaller&nbsp;is&nbsp;slower&nbsp;and&nbsp;more&nbsp;accurate.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+np.array<br>
+&nbsp;&nbsp;Array&nbsp;of&nbsp;length&nbsp;`n_samples`.</tt></dd></dl>
+</td></tr></table>
+</body></html>
