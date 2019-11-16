@@ -10,4 +10,4 @@ from hmc import nsghmc 	# naive SGHMC
 from hmc import sghmc 	# proper SGHMC
 ```
 
-See the [documentation](hmc.md) for how to use these functions.
+See the [documentation](http://htmlpreview.github.io/?https://github.com/TurboFreeze/sghmc/blob/master/hmc.html) for how to use these functions.
