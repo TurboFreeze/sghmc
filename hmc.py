@@ -80,7 +80,8 @@ def leapfrog_friction(M, C, q, p, dVdq, path_len, step_size):
     return q, -p
 
 
-def hmc(M, n_samples, negative_log_prob, initial_position, path_len=1, step_size=0.5):
+def hmc(M, n_samples, negative_log_prob, initial_position,
+    path_len=1, step_size=0.5, debug=False):
     """Hamiltonian Monte Carlo sampling.
 
     Parameters
@@ -97,13 +98,17 @@ def hmc(M, n_samples, negative_log_prob, initial_position, path_len=1, step_size
       How long each integration path is. Smaller is faster and more correlated.
     step_size : float
       How long each integration step is. Smaller is slower and more accurate.
+    debug : bool
+      Flag to include debugging information like timing in the returned values
 
     Returns
     -------
-    np.array
-      Array of length `n_samples`.
+    samples, debug : np.array, dict
+      Array of length `n_samples`;
+      Dictionary of debugging output (if debug=False, this is empty dict)
     """
 
+    debug = {}
     # autograd magic
     dVdq = grad(negative_log_prob)
 
@@ -137,11 +142,11 @@ def hmc(M, n_samples, negative_log_prob, initial_position, path_len=1, step_size
         else:
             samples.append(np.copy(samples[-1]))
 
-    return np.array(samples[1:])
+    return np.array(samples[1:]), debug
 
 
 def nsghmc(X, y, M, n_samples, negative_log_prob, initial_position,
-    batch_size=1, path_len=1, step_size=0.5):
+    batch_size=1, path_len=1, step_size=0.5, debug=False):
     """Naive Stochastic Hamiltonian Monte Carlo sampling.
 
     Parameters
@@ -164,12 +169,16 @@ def nsghmc(X, y, M, n_samples, negative_log_prob, initial_position,
       How long each integration path is. Smaller is faster and more correlated.
     step_size : float
       How long each integration step is. Smaller is slower and more accurate.
+    debug : bool
+      Flag to include debugging information like timing in the returned values
 
     Returns
     -------
-    np.array
-      Array of length `n_samples`.
+    samples, debug : np.array, dict
+      Array of length `n_samples`;
+      Dictionary of debugging output (if debug=False, this is empty dict)
     """
+    debug = {}
     n = len(y)
 
     # collect all our samples in a list
@@ -218,7 +227,7 @@ def nsghmc(X, y, M, n_samples, negative_log_prob, initial_position,
         else:
             samples.append(np.copy(samples[-1]))
 
-    return np.array(samples[1:])
+    return np.array(samples[1:]), debug
 
 
 def sghmc(X, y, M, C, n_samples, negative_log_prob, initial_position,
@@ -246,12 +255,16 @@ def sghmc(X, y, M, C, n_samples, negative_log_prob, initial_position,
       How long each integration path is. Smaller is faster and more correlated.
     step_size : float
       How long each integration step is. Smaller is slower and more accurate.
+    debug : bool
+      Flag to include debugging information like timing in the returned values
 
     Returns
     -------
-    np.array
-      Array of length `n_samples`.
+    samples, debug : np.array, dict
+      Array of length `n_samples`;
+      Dictionary of debugging output (if debug=False, this is empty dict)
     """
+    debug = {}
     n = len(y)
 
     # collect all our samples in a list
@@ -301,4 +314,4 @@ def sghmc(X, y, M, C, n_samples, negative_log_prob, initial_position,
         else:
             samples.append(np.copy(samples[-1]))
 
-    return np.array(samples[1:])
+    return np.array(samples[1:]), debug
